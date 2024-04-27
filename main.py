@@ -1,11 +1,9 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI
 import uvicorn
-import numpy as np
-from io import BytesIO
-from PIL import Image
-import tensorflow as tf
 from fastapi.middleware.cors import CORSMiddleware
-import keras
+from v1.routes.classifications import controller as classifications
+from v1.routes.users import controller as users
+from v1.routes.suppliers import controller as suppliers
 
 app = FastAPI()
 
@@ -18,33 +16,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-MODEL = keras.models.load_model("./models/2_model")
-print(MODEL)
-CLASS_NAMES = ["oocarpa", "psegoutrobus", "tecunumanii"]
 
-def read_file_as_image(data) -> np.ndarray:
-    image = np.array(Image.open(BytesIO(data)))
-    return image
-
-@app.post("/predict")
-async def predict(
-    file: UploadFile = File(...)
-):
-    image = read_file_as_image(await file.read())
-    image_resized = tf.image.resize(image, (256, 256))
-
-    image_batch = np.expand_dims(image_resized, 0)
-
-
-    predictions = MODEL.predict(image_batch)
-
-    predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
-    confidence = round(100 * (np.max(predictions[0])), 2) # np.argmax(predictions[0])    
-
-    return {
-        'class': predicted_class,
-        'confidence': float(confidence),
-    }
+app.include_router(classifications.router)
+app.include_router(users.router)
+app.include_router(suppliers.router)
 
 @app.get("/")
 async def root():
