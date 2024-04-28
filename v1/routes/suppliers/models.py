@@ -7,14 +7,6 @@ class SupplierModel:
         self.phone = phone
         self.address = address
 
-    def to_dict(self):
-        return {
-            'name': self.name,
-            'email': self.email,
-            'phone': self.phone,
-            'address': self.address
-        }
-
     @staticmethod
     def get_collection():
         return db.collection('suppliers')
