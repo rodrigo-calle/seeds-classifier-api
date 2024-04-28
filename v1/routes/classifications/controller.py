@@ -12,7 +12,6 @@ router = APIRouter(
 @router.get("/{classification_id}")
 def get_classification_by_id(classification_id: str):
     classification = ClassificationService.get_classification_by_id_service(classification_id)
-    print(classification._data)
     if classification.exists:
         classification_data = ClassificationService.format_classification_data(classification)
         return classification_data
@@ -36,5 +35,4 @@ def update_classification(classification_id: str, classification: dict):
 @router.post("/predict")
 async def classify_image(image: UploadFile = File(...)):
     classification = await ClassificationService.classify_image_service(image)
-    print(classification)
     return classification
