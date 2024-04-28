@@ -30,13 +30,10 @@ class ClassiAPI:
         self.app.include_router(suppliers.router)
 
     def run(self):
-        @self.app.get("/")
-        async def root():
-            return {"message": "Welcome to the Pine Seeds Classifier API!"}
+        uvicorn.run("main:server.app", host="localhost", port=int(os.environ.get("PORT")), reload=True)
 
-        uvicorn.run(self.app, host='localhost', port=int(os.environ.get("PORT")))
+server = ClassiAPI()
 
 if __name__ == "__main__":
-    my_app = ClassiAPI()
-    my_app.run()
+    server.run()
 
