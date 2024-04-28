@@ -34,7 +34,7 @@ class ClassiAPI:
         async def root():
             return {"message": "Welcome to the Pine Seeds Classifier API!"}
 
-        uvicorn.run(self.app, host='localhost', port=os.environ.get("PORT"))
+        uvicorn.run(self.app, host='localhost', port=int(os.environ.get("PORT")))
 
 if __name__ == "__main__":
     my_app = ClassiAPI()
