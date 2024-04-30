@@ -8,32 +8,24 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-class ClassiAPI:
-    def __init__(self):
-        self.app = FastAPI()
-        self.setup_middleware()
-        self.setup_routers()
-        
-    def setup_middleware(self):
-        origins = ["*"]
-        self.app.add_middleware(
-            CORSMiddleware,
-            allow_origins=origins,
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
 
-    def setup_routers(self):
-        self.app.include_router(classifications.router)
-        self.app.include_router(users.router)
-        self.app.include_router(suppliers.router)
+app = FastAPI()
 
-    def run(self):
-        uvicorn.run("main:server.app", host="localhost", port=int(os.environ.get("PORT")), reload=True)
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-server = ClassiAPI()
+app.include_router(classifications.router)
+app.include_router(users.router)
+app.include_router(suppliers.router)
 
-if __name__ == "__main__":
-    server.run()
-
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Pine Seeds Classifier API!"}
+if __name__== "__main__":
+    uvicorn.run(app, host='localhost', port=8000)
