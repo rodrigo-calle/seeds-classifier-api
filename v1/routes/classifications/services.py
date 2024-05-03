@@ -56,8 +56,10 @@ class ClassificationService:
     @staticmethod
     def create_classification_service(classification: dict):
         """Create Classification Service"""
-        if ClassificationModel.request_validation(classification):
+        print(classification)
+        if ClassificationModel.create_request_validation(classification):
             classification_ref = ClassificationModel.get_collection().add(classification)
+            print(classification_ref)
             return classification_ref
         else:
             return False

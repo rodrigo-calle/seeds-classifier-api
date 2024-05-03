@@ -13,7 +13,7 @@ class ClassificationModel:
     @staticmethod
     def create_request_validation(request: dict):
         """Create Request Validation"""
-        if not request.get("classification_data"):
+        if not request.get("classificationData"):
             return False
         if not request.get("user"):
             return False
@@ -21,7 +21,7 @@ class ClassificationModel:
     
     def update_request_validation(request: dict):
         """Update Request Validation"""
-        if not request.get("classification_data") or not request.get("user"):
+        if not request.get("classificationData") or not request.get("user"):
             return False
         return True
     
