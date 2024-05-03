@@ -20,9 +20,9 @@ class ClassificationService:
         """Format Classification Data"""
 
         return {
-            "classification_data": classification._data["classificationData"],
-            "created_at": classification._data["createdAt"],
-            "finished_at": classification._data["finishedAt"],
+            "classificationData": classification._data["classificationData"],
+            "createdAt": classification._data["createdAt"],
+            "finishedAt": classification._data["finishedAt"],
             "user": classification._data["user"],
         }
 
@@ -43,12 +43,25 @@ class ClassificationService:
             'class': predicted_class,
             'confidence': float(confidence),
         }
+    
+    @staticmethod
+    def get_classification_service():
+        """Get Classification Service"""
+        classifications = ClassificationModel.get_collection().stream()
+        return [ClassificationService.format_classification_data(classification) for classification in classifications]
 
     @staticmethod
     def get_classification_by_id_service(classification_id: str):
         """Get Classification By ID Service"""
         classification = ClassificationModel.get_collection().document(classification_id).get()
         return classification
+
+    @staticmethod
+    def get_classification_by_user_service(user_id: str):
+        """Get Classification By User Service"""
+        classifications = ClassificationModel.get_collection().where("user", "==", user_id).stream()
+        return [ClassificationService.format_classification_data(classification) for classification in classifications]
+
 
     @staticmethod
     def create_classification_service(classification: dict):

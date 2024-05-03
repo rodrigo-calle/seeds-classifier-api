@@ -41,3 +41,14 @@ def update_classification(classification_id: str, classification: dict):
 async def classify_image(image: UploadFile = File(...)):
     classification = await ClassificationService.classify_image_service(image)
     return classification
+
+@router.get("/")
+def get_classifications():
+    classifications = ClassificationService.get_classification_service()
+    return classifications
+
+@router.get("/user/{user_id}")
+def get_classifications_by_user(user_id: str):
+    classifications = ClassificationService.get_classification_by_user_service(user_id)
+    return classifications
+
