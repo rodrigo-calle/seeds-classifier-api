@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from v1.routes.classifications import controller as classifications
 from v1.routes.users import controller as users
 from v1.routes.suppliers import controller as suppliers
+from v1.routes.reports import controller as reports
 import os
 from dotenv import load_dotenv
 
@@ -23,6 +24,7 @@ app.add_middleware(
 app.include_router(classifications.router)
 app.include_router(users.router)
 app.include_router(suppliers.router)
+app.include_router(reports.router)
 
 @app.get("/")
 async def root():
