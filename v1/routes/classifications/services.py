@@ -77,6 +77,7 @@ class ClassificationService:
     @staticmethod
     def update_classification_service(classification_id: str, classification_data: dict):
         """Update Classification Service"""
+        print(classification_data)
         if ClassificationModel.update_request_validation(classification_data) and ClassificationModel.get_collection().document(classification_id).get().exists:
             classification = ClassificationModel.get_collection().document(classification_id)
             classification.update(classification_data)

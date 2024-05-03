@@ -34,7 +34,9 @@ def update_classification(classification_id: str, classification: dict):
     if classification is False:
         return {"error": "Classification not found or invalid data"}
     else:
-        return classification.get().to_dict()
+        result = classification.get().to_dict()
+        print(result)
+        return result
 
 # Seed Classification Method
 @router.post("/predict")
