@@ -21,7 +21,7 @@ class ClassificationModel:
     
     def update_request_validation(request: dict):
         """Update Request Validation"""
-        if not request.get("classificationData") or not request.get("user"):
+        if not request.get("classificationData"):
             return False
         return True
     
