@@ -18,15 +18,12 @@ class ClassificationService:
     @staticmethod
     def format_classification_data(classification: dict):
         """Format Classification Data"""
-        finish_date = None
-        if classification._data["finishedAt"] is not None:
-            finish_date = datetime.datetime.fromtimestamp(classification._data["finishedAt"].timestamp())
-        
+
         return {
             "classification_data": classification._data["classificationData"],
-            "created_at": datetime.datetime.fromtimestamp(classification._data["createdAt"].timestamp()),
-            "finished_at": finish_date,
-            "user": classification._data["user"].get().to_dict(),
+            "created_at": classification._data["createdAt"],
+            "finished_at": classification._data["finishedAt"],
+            "user": classification._data["user"],
         }
 
     @staticmethod
