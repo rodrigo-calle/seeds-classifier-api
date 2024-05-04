@@ -54,3 +54,17 @@ def get_classifications_by_user(user_id: str):
     classifications = ClassificationService.get_classification_by_user_service(user_id)
     return classifications
 
+@router.get("/technical/{technical_id}")
+def get_classifications_by_technical(technical_id: str):
+    classifications = ClassificationService.get_classification_by_technical_service(technical_id)
+    return classifications
+
+@router.delete("/{classification_id}")
+def delete_classification(classification_id: str):
+    classification = ClassificationService.delete_classification_service(classification_id)
+    return classification
+
+@router.patch("/finish/{classification_id}")
+def finish_classification(classification_id: str):
+    classification = ClassificationService.finish_classification_service(classification_id)
+    return classification

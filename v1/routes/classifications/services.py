@@ -24,6 +24,8 @@ class ClassificationService:
             "createdAt": classification._data["createdAt"],
             "finishedAt": classification._data["finishedAt"],
             "user": classification._data["user"],
+            "id": classification.id,
+            "task": classification._data["task"] if classification._data.get("task") else None,
         }
 
     @staticmethod
@@ -91,4 +93,18 @@ class ClassificationService:
         classification = ClassificationModel.get_collection().document(classification_id)
         classification.delete()
         return True
+    
+    @staticmethod
+    def get_classification_by_technical_service(technical_id: str):
+        """Get Classifications By Technical Assigned Service"""
+        print(technical_id)
+        classifications = ClassificationModel.get_collection().where("task.technical", "==", technical_id).stream()
+        return [ClassificationService.format_classification_data(classification) for classification in classifications]
+
+    @staticmethod
+    def finish_classification_service(classification_id: str):
+        """Finish Classification Service"""
+        classification = ClassificationModel.get_collection().document(classification_id)
+        classification.update({"finishedAt": datetime.datetime.now().timestamp()})
+        return classification
     

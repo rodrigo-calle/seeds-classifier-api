@@ -16,3 +16,22 @@ class UserService:
         """Get User By ID Service"""
         user = UsersModel.get_collection().document(user_id).get()
         return user
+        
+    @staticmethod
+    def get_user_by_email(user_email: str):
+        """Get User By Email Service"""
+        user = UsersModel.get_collection().where("email", "==", user_email).stream()
+        return [user.to_dict() for user in user]
+
+    
+    @staticmethod
+    def get_technical_users_service():
+        """Get Technical Users Service"""
+        users = UsersModel.get_collection().where("userType", "==", "technical").stream()
+        return users
+    
+    def get_users_service():
+        """Get Users Service"""
+        users = UsersModel.get_collection().stream()
+        return [user.to_dict() for user in users]
+
