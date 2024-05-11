@@ -15,7 +15,7 @@ class ClassificationModel:
         """Create Request Validation"""
         if not request.get("classificationData"):
             return False
-        if not request.get("user"):
+        if not request.get("userId"):
             return False
         return True
     

@@ -13,6 +13,8 @@ def read_file_as_image(data) -> np.ndarray:
     image = np.array(Image.open(BytesIO(data)))
     return image
 
+business_id = 'vivero-santo-domingo'
+
 # Classification Service
 class ClassificationService:
     @staticmethod
@@ -70,6 +72,7 @@ class ClassificationService:
         """Create Classification Service"""
         print(classification)
         if ClassificationModel.create_request_validation(classification):
+            classification["businessId"] = business_id
             classification_ref = ClassificationModel.get_collection().add(classification)
             print(classification_ref)
             return classification_ref
