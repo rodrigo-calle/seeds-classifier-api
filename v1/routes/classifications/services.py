@@ -25,7 +25,7 @@ class ClassificationService:
             "classificationData": classification._data["classificationData"],
             "createdAt": classification._data["createdAt"],
             "finishedAt": classification._data["finishedAt"],
-            "user": classification._data["user"],
+            "userId": classification._data["userId"],
             "id": classification.id,
             "task": classification._data["task"] if classification._data.get("task") else None,
         }
