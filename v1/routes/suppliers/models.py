@@ -13,12 +13,12 @@ class SupplierModel:
     
     @staticmethod
     def create_request_validation(request: dict):
-        if not request.get('supplierHarvestMethod') or not request.get('supplierName') or not request.get('supplierPhone') or not request.get('supplierSeedOrigin'):
+        if not request.get('harvestMethod') or not request.get('name') or not request.get('phone') or not request.get('seedOrigin'):
             return False
         return True
     
     @staticmethod
     def update_request_validation(request: dict):
-        if not request.get('supplierHarvestMethod') or not request.get('supplierName') or not request.get('supplierPhone') or not request.get('supplierSeedOrigin'):
+        if not request.get('harvestMethod') or not request.get('name') or not request.get('phone') or not request.get('seedOrigin'):
             return False
         return True

@@ -1,12 +1,14 @@
 from firebase.config import db
 from .models import UsersModel
 
+business_id = "vivero-santo-domingo"
 
 class UserService:
     @staticmethod
     def create_user_service(user: dict):
         """Create User Service"""
         if UsersModel.request_validation(user):
+            user["businessId"] = business_id
             return UsersModel.get_collection().add(user)
         else:
             return False

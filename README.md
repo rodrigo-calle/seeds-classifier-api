@@ -32,11 +32,12 @@
     {    
         businessId: string;
         createdBy: string; # userId
-        HarvestMethod: string;
-        Name: string;
-        Phone: string;
-        SeedOrigin: string;
-        Email: string;
+        harvestMethod: string;
+        name: string;
+        phone: string;
+        seedOrigin: string;
+        email: string;
+        address: string;
     }
 ```
 

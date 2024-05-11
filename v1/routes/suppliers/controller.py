@@ -19,7 +19,12 @@ def get_supplier_by_id(supplier_id: str):
 @router.post("/")
 def create_supplier(supplier: dict):
     supplier = SupplierService.create_supplier_service(supplier)
-    return supplier
+    if supplier is False:
+        return {"error": "Invalid data"}
+    else:   
+        supplier_data = supplier[1].get().to_dict()
+        supplier_data["id"] = supplier[1].id
+        return supplier_data
 
 @router.patch("/{supplier_id}")
 def update_supplier(supplier_id: str, supplier: dict):
