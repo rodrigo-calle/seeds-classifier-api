@@ -8,7 +8,7 @@ class UsersModel:
 
     @staticmethod
     def request_validation(request: dict):
-        if not request.get("userName") or not request.get("email") or not request.get("userType"):
+        if not request.get("name") or not request.get("email") or not request.get("role"):
             return False
         return True
     
