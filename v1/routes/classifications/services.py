@@ -74,7 +74,6 @@ class ClassificationService:
         if ClassificationModel.create_request_validation(classification):
             classification["businessId"] = business_id
             classification_ref = ClassificationModel.get_collection().add(classification)
-            print(classification_ref)
             return classification_ref
         else:
             return False
@@ -110,4 +109,25 @@ class ClassificationService:
         classification = ClassificationModel.get_collection().document(classification_id)
         classification.update({"finishedAt": datetime.datetime.now().timestamp()})
         return classification
+    
+    @staticmethod
+    def update_classification_by_kind(classification_id: str, update_kind: str, classification_data: dict):
+        """Update Classification by Kind Service"""
+        print(classification_data)
+        classification = ClassificationModel.get_collection().document(classification_id)
+        if update_kind == "task":
+            classification.update({"task": classification_data})
+        elif update_kind == "counter":
+            classification.update({"classificationData": {
+                "psegoustrobus": classification_data["classificationData"]["psegoustrobus"],
+                "oocarpa": classification_data["classificationData"]["oocarpa"],
+                "tecunumanii": classification_data["classificationData"]["tecunumanii"]
+            }})
+        elif update_kind == "finish":
+            classification.update({"finishedAt": datetime.datetime.now().timestamp() })
+        elif update_kind == "start":
+            classification.update({"createdAt": datetime.datetime.now().timestamp() })
+
+        return classification
+    
     

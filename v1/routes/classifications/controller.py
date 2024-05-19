@@ -38,6 +38,16 @@ def update_classification(classification_id: str, classification: dict):
         print(result)
         return result
 
+@router.patch("/{classification_id}/{update_kind}")
+def update_classification_by_kind(classification_id: str, update_kind: str, classification_data: dict):
+    classification = ClassificationService.update_classification_by_kind(classification_id, update_kind, classification_data)
+    if classification is False:
+        return {"error": "Classification not found or invalid data"}
+    else:
+        result = classification.get().to_dict()
+        result["id"] = classification.id
+        return result    
+
 # Seed Classification Method
 @router.post("/predict")
 async def classify_image(image: UploadFile = File(...)):
