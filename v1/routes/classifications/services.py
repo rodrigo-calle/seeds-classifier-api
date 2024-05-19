@@ -73,6 +73,7 @@ class ClassificationService:
         print(classification)
         if ClassificationModel.create_request_validation(classification):
             classification["businessId"] = business_id
+            classification["createdAt"] = datetime.datetime.now().timestamp()
             classification_ref = ClassificationModel.get_collection().add(classification)
             return classification_ref
         else:
