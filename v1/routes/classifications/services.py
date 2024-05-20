@@ -63,7 +63,7 @@ class ClassificationService:
     @staticmethod
     def get_classification_by_user_service(user_id: str):
         """Get Classification By User Service"""
-        classifications = ClassificationModel.get_collection().where("user", "==", user_id).stream()
+        classifications = ClassificationModel.get_collection().where("userId", "==", user_id).stream()
         return [ClassificationService.format_classification_data(classification) for classification in classifications]
 
 
@@ -101,7 +101,7 @@ class ClassificationService:
     def get_classification_by_technical_service(technical_id: str):
         """Get Classifications By Technical Assigned Service"""
         print(technical_id)
-        classifications = ClassificationModel.get_collection().where("task.technical", "==", technical_id).stream()
+        classifications = ClassificationModel.get_collection().where("task.technicalId", "==", technical_id).stream()
         return [ClassificationService.format_classification_data(classification) for classification in classifications]
 
     @staticmethod
@@ -131,4 +131,9 @@ class ClassificationService:
 
         return classification
     
+    @staticmethod
+    def get_classification_by_supplier_service(supplier_id: str):
+        """Get Classifications By Supplier Service"""
+        classifications = ClassificationModel.get_collection().where("task.supplierId", "==", supplier_id).stream()
+        return [ClassificationService.format_classification_data(classification) for classification in classifications]
     
