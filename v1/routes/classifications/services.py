@@ -5,6 +5,7 @@ from fastapi import File, UploadFile
 import tensorflow as tf
 from .models import ClassificationModel
 import datetime
+import time;
 
 
 CLASS_NAMES = ["oocarpa", "psegoutrobus", "tecunumanii"]
@@ -21,14 +22,28 @@ class ClassificationService:
     def format_classification_data(classification: dict):
         """Format Classification Data"""
 
-        return {
-            "classificationData": classification._data["classificationData"],
+        result = {
+            "user": classification._data["userId"],
             "createdAt": classification._data["createdAt"],
+            "classificationData": classification._data["classificationData"],
+            "task": {},
+            "startedAt": "No started",
             "finishedAt": classification._data["finishedAt"],
-            "userId": classification._data["userId"],
-            "id": classification.id,
-            "task": classification._data["task"] if classification._data.get("task") else None,
         }
+
+        if classification._data.get("task") is not None:
+            result["task"] = classification._data["task"]
+
+        if classification._data.get("createdAt") is not None:
+            result["createdAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("createdAt")))
+        
+        if classification._data.get("finishedAt") is not None:
+            result["finishedAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("finishedAt")))
+
+        if classification._data.get("startedAt") is not None:
+            result["startedAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("startedAt")))
+        
+        return result
 
     @staticmethod
     async def classify_image_service(imageFile: UploadFile = File(...)):
@@ -51,7 +66,7 @@ class ClassificationService:
     @staticmethod
     def get_classification_service():
         """Get Classification Service"""
-        classifications = ClassificationModel.get_collection().stream()
+        classifications = ClassificationModel.get_collection().get()
         return [ClassificationService.format_classification_data(classification) for classification in classifications]
 
     @staticmethod
