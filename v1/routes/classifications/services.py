@@ -28,7 +28,8 @@ class ClassificationService:
             "classificationData": classification._data["classificationData"],
             "task": {},
             "startedAt": "No started",
-            "finishedAt": classification._data["finishedAt"],
+            "finishedAt": "In progress",
+            "id": classification.id,
         }
 
         if classification._data.get("task") is not None:
@@ -66,7 +67,7 @@ class ClassificationService:
     @staticmethod
     def get_classification_service():
         """Get Classification Service"""
-        classifications = ClassificationModel.get_collection().get()
+        classifications = ClassificationModel.get_collection().where("businessId", "==", "vivero-santo-domingo").stream()
         return [ClassificationService.format_classification_data(classification) for classification in classifications]
 
     @staticmethod
