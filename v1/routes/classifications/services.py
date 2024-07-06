@@ -154,7 +154,7 @@ class ClassificationService:
         elif update_kind == "finish":
             classification.update({"finishedAt": datetime.datetime.now().timestamp() })
         elif update_kind == "start":
-            classification.update({"createdAt": datetime.datetime.now().timestamp() })
+            classification.update({"startedAt": datetime.datetime.now().timestamp() })
 
         return classification
     
