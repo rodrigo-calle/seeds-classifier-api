@@ -27,22 +27,31 @@ class ClassificationService:
             "createdAt": classification._data["createdAt"],
             "classificationData": classification._data["classificationData"],
             "task": {},
-            "startedAt": "No started",
-            "finishedAt": "In progress",
+            "startedAt": 0, # this mean not started
+            "finishedAt": 0, # this mean not started
             "id": classification.id,
         }
-
+    
         if classification._data.get("task") is not None:
             result["task"] = classification._data["task"]
 
         if classification._data.get("createdAt") is not None:
-            result["createdAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("createdAt")))
+            result["createdAt"] = classification._data.get("createdAt")
         
         if classification._data.get("finishedAt") is not None:
-            result["finishedAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("finishedAt")))
-
+            result["finishedAt"] = classification._data.get("finishedAt")
+        
         if classification._data.get("startedAt") is not None:
-            result["startedAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("startedAt")))
+            result["startedAt"] = classification._data.get("startedAt")
+        
+        # if classification._data.get("createdAt") is not None:
+        #     result["createdAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("createdAt")))
+        
+        # if classification._data.get("finishedAt") is not None:
+        #     result["finishedAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("finishedAt")))
+
+        # if classification._data.get("startedAt") is not None:
+        #     result["startedAt"] = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(classification._data.get("startedAt")))
         
         return result
 
