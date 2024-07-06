@@ -27,7 +27,7 @@ def download_csv(worker_id: str, response: Response):
 
     # Write classification data to CSV
     with open(csv_file_name, "w", newline="") as csvfile:
-        fieldnames = ["user", "createdAt", "classificationData", "task", "startedAt", "finishedAt"]  # Define field names based on your classification data
+        fieldnames = ["id", "user", "createdAt", "classificationData", "task", "startedAt", "finishedAt"]  # Define field names based on your classification data
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for classification in classifications:
